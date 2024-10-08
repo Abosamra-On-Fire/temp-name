@@ -34,6 +34,7 @@
 
 import { Router, Request, Response } from "express";
 import logout from "@controllers/logout-controller";
+//import userController from "@controllers/user-controller";
 
 const router: Router = Router();
 
@@ -41,5 +42,6 @@ router.route("/").get((req: Request, res: Response) => {
     res.sendStatus(200);
 });
 router.get("/logout", logout);
+router.put("/user", );
 
 export default router;

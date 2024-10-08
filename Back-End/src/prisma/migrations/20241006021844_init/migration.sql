@@ -3,9 +3,12 @@ CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "email" TEXT NOT NULL,
     "name" TEXT NOT NULL,
+    "userName" TEXT NOT NULL UNIQUE,
+    "bio" TEXT,
     "password" VARCHAR(256) NOT NULL,
     "email_status" TEXT NOT NULL DEFAULT 'Deactivated',
-
+    "last_seen" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP,
+    "profilePic" TEXT DEFAULT 'NULL',
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
 );
 
