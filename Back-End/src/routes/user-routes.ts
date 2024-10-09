@@ -29,11 +29,13 @@
  *             type: string
  *            message:
  *             type: string
- *
+ *  
  */
 
 import { Router, Request, Response } from "express";
 import logout from "@controllers/logout-controller";
+import * as userController from "@controllers/user-controller";
+import { r } from "@faker-js/faker/dist/airline-C5Qwd7_q";
 //import userController from "@controllers/user-controller";
 
 const router: Router = Router();
@@ -42,6 +44,8 @@ router.route("/").get((req: Request, res: Response) => {
     res.sendStatus(200);
 });
 router.get("/logout", logout);
-router.put("/user", );
-
+router.put("/user", userController.updateUser);
+router.get("/user", userController.getUserInfo);
+router.post("/story", userController.setStory);
+router.delete("/story", userController.deleteStory);
 export default router;

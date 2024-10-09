@@ -63,12 +63,8 @@ const setStory = async (id: number, content: string, media: string) => {
 };
 
 const deleteStory = async (userId: number ,storyId: number) => {
-    if (!userId) {
-        throw new Error("User id is required");
-    }
-
-    if (!storyId) {
-        throw new Error("Story id is required");
+    if (!userId || !storyId) {
+        throw new Error("User ID and Story ID are required");
     }
 
     const deletedStory = await db.story.delete({
@@ -80,18 +76,20 @@ const deleteStory = async (userId: number ,storyId: number) => {
     return deletedStory;
 };
 
-const userInfo = async (id: number) => {
+const userInfo = async (email: string) => {
     const User = await db.user.findUnique({
-        where: { id },
+        where: { email },
         select: {
-            email_status: false,
-            password: false,
-            id: false,
+            name: true,
+            userName: true,
+            email: true,
+            bio: true,
+            profilePic: true,
+            lastSeen: true,
         }
     });
     return User;
 };
-
 
 
 export { updateUser, setStory, deleteStory, userInfo };

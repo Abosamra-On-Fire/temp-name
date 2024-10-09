@@ -42,11 +42,31 @@ const setStory = async (req: Request, res: Response) => {
     }
 };
 
-const getUserInfo = async (req: Request, res: Response) => {
+const deleteStory = async (req: Request, res: Response) => {
     try 
     {
         let id: number = req.userId;
-        let user = await userServices.userInfo(id);
+        let storyId: number = req.body.storyId;
+        userServices.deleteStory(id, storyId);
+        res.status(200).json({
+            status: "success",
+        });
+    } 
+    catch (e: any) 
+    {
+        console.log(e.message);
+        res.status(400).json({
+            status: "failed",
+            message: e.message,
+        });
+    }
+    
+};
+
+const getUserInfo = async (req: Request, res: Response) => {
+    try 
+    {
+        let user = await userServices.userInfo(req.body.email);
         res.status(200).json({
             status: "success",
             data: user,
@@ -61,3 +81,5 @@ const getUserInfo = async (req: Request, res: Response) => {
         });
     }
 };
+
+export { updateUser, setStory, deleteStory, getUserInfo };
