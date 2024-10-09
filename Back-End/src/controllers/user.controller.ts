@@ -1,6 +1,6 @@
 import { User } from "@prisma/client";
 import { Request, Response } from "express";
-import * as userServices from "@services/user-services";
+import * as userServices from "@services/user.services";
 
 const updateUser = async (req: Request, res: Response) => {
     try 

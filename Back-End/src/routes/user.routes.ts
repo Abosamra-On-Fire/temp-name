@@ -33,8 +33,8 @@
  */
 
 import { Router, Request, Response } from "express";
-import logout from "@controllers/logout-controller";
-import * as userController from "@controllers/user-controller";
+import logout from "@controllers/AuthenRegist/logout.controller";
+import * as userController from "@controllers/user.controller";
 import { r } from "@faker-js/faker/dist/airline-C5Qwd7_q";
 //import userController from "@controllers/user-controller";
 
