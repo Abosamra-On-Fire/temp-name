@@ -7,10 +7,7 @@ exports.validateCode = exports.validateEmail = void 0;
 const joi_1 = __importDefault(require("joi"));
 const validateEmail = (email) => {
     const schema = joi_1.default.object({
-        email: joi_1.default.string()
-            .email()
-            .pattern(/@gmail\.com$/)
-            .required(),
+        email: joi_1.default.string().email().required(),
     });
     const error = schema.validate({ email }, { abortEarly: false }).error;
     if (error) {

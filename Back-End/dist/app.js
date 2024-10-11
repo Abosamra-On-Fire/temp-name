@@ -7,7 +7,7 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
-const index_routes_1 = __importDefault(require("@routes/index-routes"));
+const index_routes_1 = __importDefault(require("@routes/index.routes"));
 const swagger_1 = __importDefault(require("./swagger"));
 const swagger_ui_express_1 = __importDefault(require("swagger-ui-express"));
 dotenv_1.default.config();

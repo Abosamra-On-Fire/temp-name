@@ -1,3 +1,4 @@
+"use strict";
 /**
  * @swagger
  * paths:
@@ -195,23 +196,22 @@
  *             type: string
  *
  */
-
-import { Router } from "express";
-import login from "@controllers/AuthenRegist/login.controller";
-import signup from "@controllers/AuthenRegist/signup.controller";
-import { generateCode, verifyCode } from "@controllers/AuthenRegist/verification.controller";
-import googleAuth from "@controllers/AuthenRegist/google.auth.controller";
-import logout from "@controllers/AuthenRegist/logout.controller";
-import userAuth from "@middlewares/auth.middleware";
-
-const router: Router = Router();
-
-router.post("/login", login);
-router.post("/signup", signup);
-router.post("/generateCode", generateCode);
-router.post("/verifyCode", verifyCode);
-router.post("/googleToken", googleAuth);
-
-router.get("/logout", userAuth, logout);
-
-export default router;
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const login_controller_1 = __importDefault(require("@controllers/AuthenRegist/login.controller"));
+const signup_controller_1 = __importDefault(require("@controllers/AuthenRegist/signup.controller"));
+const verification_controller_1 = require("@controllers/AuthenRegist/verification.controller");
+const google_auth_controller_1 = __importDefault(require("@controllers/AuthenRegist/google.auth.controller"));
+const logout_controller_1 = __importDefault(require("@controllers/AuthenRegist/logout.controller"));
+const auth_middleware_1 = __importDefault(require("@middlewares/auth.middleware"));
+const router = (0, express_1.Router)();
+router.post("/login", login_controller_1.default);
+router.post("/signup", signup_controller_1.default);
+router.post("/generateCode", verification_controller_1.generateCode);
+router.post("/verifyCode", verification_controller_1.verifyCode);
+router.post("/googleToken", google_auth_controller_1.default);
+router.get("/logout", auth_middleware_1.default, logout_controller_1.default);
+exports.default = router;

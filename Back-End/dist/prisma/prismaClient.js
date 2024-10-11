@@ -1,5 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.prisma = void 0;
+//singleton pattern
 const client_1 = require("@prisma/client");
-const prisma = new client_1.PrismaClient();
-exports.default = prisma;
+const globalForPrisma = global;
+exports.prisma = globalForPrisma.prisma || new client_1.PrismaClient();
+globalForPrisma.prisma = exports.prisma;
+exports.default = exports.prisma;
