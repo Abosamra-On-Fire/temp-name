@@ -13,28 +13,28 @@ generator client {
 }
 
 model User {
-  id               Int               @id @default(autoincrement())
-  email            String            @unique
-  name             String
-  userName         String            @unique
-  password         String            @db.VarChar(256)
-  email_status     String            @default("Deactivated")
-  bio              String
-  phone_number     String            @unique
-  verfication_code Verification?
-  profilePic       String            @default("NULL")
-  lastSeen         DateTime          @default(now())
-  messages         ChatMessage[] // One-to-many relationship with Message
-  participants     ChatParticipant[] // One-to-many relationship with ChatParticipant
-  Story            Story[] // One-to-many relationship with stories
+  id              Int               @id @default(autoincrement())
+  email           String            @unique
+  name            String
+  userName        String            @unique
+  password        String            @db.VarChar(256)
+  bio             String
+  profilePic      String            @default("NULL")
+  lastSeen        DateTime          @default(now())
+  phoneNumber     String            @unique
+  emailStatus     String            @default("Deactivated")
+  verficationCode Verification?
+  messages        ChatMessage[] // One-to-many relationship with Message
+  participants    ChatParticipant[] // One-to-many relationship with ChatParticipant
+  Story           Story[] // One-to-many relationship with stories
 }
 
 model Verification {
-  id         Int      @id @default(autoincrement())
-  code       String   @unique
-  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
-  user_id    Int      @unique
-  created_at DateTime @default(now())
+  id        Int      @id @default(autoincrement())
+  code      String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  userId    Int      @unique
+  createdAt DateTime @default(now())
 }
 
 // Chat Model

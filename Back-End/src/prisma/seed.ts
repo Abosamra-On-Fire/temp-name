@@ -15,10 +15,10 @@ async function createUsers(numUsers: number) {
                 email: faker.internet.email(),
                 name: faker.person.fullName(),
                 userName: faker.internet.userName(),
-                phone_number: faker.phone.number({ style: "international" }),
                 password: bcrypt.hashSync(passwords[i], 10),
-                email_status: faker.helpers.arrayElement(["Activated", "Deactivated"]),
                 bio: faker.lorem.sentence(),
+                phoneNumber: faker.phone.number({ style: "international" }),
+                emailStatus: faker.helpers.arrayElement(["Activated", "Deactivated"]),
             },
         });
         users.push(user);
