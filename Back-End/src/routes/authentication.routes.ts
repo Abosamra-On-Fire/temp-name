@@ -200,21 +200,22 @@
 import { Router } from "express";
 import login from "@controllers/AuthenRegist/login.controller";
 import signup from "@controllers/AuthenRegist/signup.controller";
-import { generateCode, verifyCode } from "@controllers/AuthenRegist/confirmation.controller";
+import { resendConfirmCode, confirmEmail } from "@controllers/AuthenRegist/confirmation.controller";
 import googleAuth from "@controllers/AuthenRegist/google.auth.controller";
-import logout from "@controllers/AuthenRegist/logout.controller";
 import userAuth from "@middlewares/auth.middleware";
+import { logoutAll, logoutOne } from "@controllers/AuthenRegist/logout.controller";
 
 
 const router: Router = Router();
 
 router.post("/login", login);
 router.post("/signup", signup);
-router.post("/generateCode", generateCode);
-router.post("/verifyCode", verifyCode);
+router.post("/resendCode", resendConfirmCode);
+router.post("/confirmEmail", confirmEmail);
 router.post("/googleToken", googleAuth);
 
-router.get("/logout", userAuth, logout);
+router.get("/logoutOne", userAuth, logoutOne);
+router.get("/logoutAll", userAuth, logoutAll);
 
 
 export default router;

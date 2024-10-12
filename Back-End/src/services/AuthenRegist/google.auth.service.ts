@@ -21,7 +21,7 @@ const getUserData = async (token: string): Promise<Record<string, any> | undefin
 };
 
 const upsertUser = async (data: Record<string, any>): Promise<User> => {
-    const user_data: {
+    const userData: {
         name: string;
         email: string;
         password: string;
@@ -33,10 +33,10 @@ const upsertUser = async (data: Record<string, any>): Promise<User> => {
     // update in case user is already existed and just login
     // create in case user is not existed and login
     const user: User = await db.user.upsert({
-        where: { email: user_data.email },
+        where: { email: userData.email },
         update: { loggedInDevices: { increment: 1 } },
         create: {
-            ...user_data,
+            ...userData,
             loggedInDevices: 1
         },
     });

@@ -36,4 +36,4 @@ async function logoutAll(req: Request, res: Response): Promise<void> {
     }
 }
 
-export default { logoutAll, logoutOne };
+export { logoutAll, logoutOne };
