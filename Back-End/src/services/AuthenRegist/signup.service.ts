@@ -1,47 +1,27 @@
-import { User } from "@prisma/client";
+import { User, AccountStatus } from "@prisma/client";
 import db from "src/prisma/PrismaClient";
+import redis from '@redis';
 import bcrypt from "bcrypt";
 
 const findUser = async (email: string, password: string): Promise<void> => {
-    const found_user: User | null = await db.user.findUnique({
-        where: { email },
+    const foundUser: User | null = await db.user.findUnique({
+        where: { email, accountStatus: AccountStatus.Activated },
     });
-    if (found_user && found_user.email_status === "Activated") {
-        throw new Error("Email is already found");
+    if (foundUser) {
+        throw new Error("Email is already found and activated");
     }
 };
 
-const upsertUser = async (
+
+const saveUser = async (
     name: string,
     email: string,
-    phone_number: string,
+    phoneNumber: string,
     password: string,
-    verification_code: string
 ): Promise<void> => {
-    await db.user.upsert({
-        where: { email },
-        update: {
-            name,
-            phone_number,
-            password: bcrypt.hashSync(password, 10),
-            verfication_code: {
-                update: {
-                    code: verification_code,
-                },
-            },
-        },
-        create: {
-            name,
-            email,
-            phone_number,
-            password: bcrypt.hashSync(password, 10),
-            verfication_code: {
-                create: {
-                    code: verification_code,
-                },
-            },
-        },
-    });
+    // Save user's data in redis and set expire time for this data (3 hours)
+    await redis.hSet(email, { name, email, phoneNumber, password: bcrypt.hashSync(password, 10) });
+    await redis.expire(email, 10800)
 };
 
-export { findUser, upsertUser };
+export { findUser, saveUser };

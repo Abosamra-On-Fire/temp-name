@@ -10,6 +10,9 @@ const getUserData = async (token: string): Promise<Record<string, any> | undefin
             `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${token}`
         );
         const data: Record<string, any> = await response.json();
+        if (!data.email_verified || data.error) {
+            return undefined;
+        }
         return data;
     } catch (err: any) {
         console.log(err.message);
@@ -21,21 +24,21 @@ const upsertUser = async (data: Record<string, any>): Promise<User> => {
     const user_data: {
         name: string;
         email: string;
-        phone_number: string,
         password: string;
-        email_status: string;
     } = {
         name: data.name,
         email: data.email,
-        phone_number: data.phone_number,
         password: bcrypt.hashSync(randomstring.generate({ length: 250 }), 10),
-        email_status: "Activated",
     };
-
+    // update in case user is already existed and just login
+    // create in case user is not existed and login
     const user: User = await db.user.upsert({
         where: { email: user_data.email },
-        update: {},
-        create: user_data,
+        update: { loggedInDevices: { increment: 1 } },
+        create: {
+            ...user_data,
+            loggedInDevices: 1
+        },
     });
     return user;
 };

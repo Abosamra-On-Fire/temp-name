@@ -1,4 +1,4 @@
-import { User } from "@prisma/client";
+import { User, AccountStatus } from "@prisma/client";
 import db from "src/prisma/PrismaClient";
 import bcrypt from "bcrypt";
 
@@ -9,13 +9,23 @@ const findUser = async (email: string, password: string): Promise<User> => {
     if (!user) {
         throw new Error("Email doesn't exist");
     }
+    if (user.accountStatus === AccountStatus.Deactivated) {
+        throw new Error("Account is deactivated");
+    }
     if (!bcrypt.compareSync(password, user.password)) {
         throw new Error("Incorrect password. Try again");
-    }
-    if (user.email_status !== "Activated") {
-        throw new Error("Email is not verified");
     }
     return user;
 };
 
-export default findUser;
+
+async function incrementDevices(userId: number) {
+    await db.user.update({
+        where: { id: userId },
+        data: {
+            loggedInDevices: { increment: 1 }
+        }
+    });
+}
+
+export { findUser, incrementDevices };

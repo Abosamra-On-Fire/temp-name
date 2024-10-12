@@ -1,7 +1,7 @@
 /**
  * @swagger
  * paths:
- *  /login:
+ *  /apis/auth-regst/login:
  *   post:
  *     summary: Try to login the application
  *     operationID: Login
@@ -41,7 +41,7 @@
  *                  email:
  *                   type: string
  *
- *  /signup:
+ *  /apis/auth-regst/signup:
  *   post:
  *     summary: Try to signup new user in the application
  *     operationID: SignUp
@@ -86,7 +86,7 @@
  *                   type: string
  *                  email:
  *                   type: string
- *  /googleToken:
+ *  /apis/auth-regst/googleToken:
  *   post:
  *    summary: Decode token from google sign-up of login service to get user's data
  *    operationID: Google Token
@@ -122,7 +122,7 @@
  *               user_token:
  *                type: string
  *
- *  /generateCode:
+ *  /apis/auth-regst/generateCode:
  *   post:
  *     summary: Generate Code for verify user's email
  *     operationID: Generate Code
@@ -148,7 +148,7 @@
  *                status:
  *                 type: string
  *
- *  /verifyCode:
+ *  /apis/auth-regst/verifyCode:
  *   post:
  *     summary: Verify Code to activate user's email
  *     operationID: Verify Code
@@ -165,6 +165,7 @@
  *           type: string
  *          code:
  *           type: string
+ *           length: 8
  *
  *     responses:
  *       200:
@@ -176,7 +177,7 @@
  *                status:
  *                 type: string
  * 
- *  /logout:
+ *  /apis/auth-regst/logout:
  *   get:
  *    summary: Logout and delete token cookie
  *    operationID: Logout
@@ -199,7 +200,7 @@
 import { Router } from "express";
 import login from "@controllers/AuthenRegist/login.controller";
 import signup from "@controllers/AuthenRegist/signup.controller";
-import { generateCode, verifyCode } from "@controllers/AuthenRegist/verification.controller";
+import { generateCode, verifyCode } from "@controllers/AuthenRegist/confirmation.controller";
 import googleAuth from "@controllers/AuthenRegist/google.auth.controller";
 import logout from "@controllers/AuthenRegist/logout.controller";
 import userAuth from "@middlewares/auth.middleware";

@@ -18,9 +18,8 @@ const validateCode = (email: string, code: string) => {
     const schema: ObjectSchema = Joi.object({
         email: Joi.string()
             .email()
-            .pattern(/@gmail\.com$/)
             .required(),
-        code: Joi.string().required(),
+        code: Joi.string().length(8).required(),
     });
     const error: ValidationError | undefined = schema.validate(
         { email, code },

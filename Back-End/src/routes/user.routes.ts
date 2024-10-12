@@ -1,7 +1,7 @@
 /**
  * @swagger
  * paths:
- *  /:
+ *  /apis/user/:
  *   get:
  *    summary: Authenticate token cookie
  *    operationID: Authenticate Token
